@@ -15,6 +15,7 @@ public class SmanCont : MonoBehaviour
 
     public float smanHP;
     public int smanDmg;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +34,7 @@ public class SmanCont : MonoBehaviour
         {
             if(PlayerPrefs.GetInt("level") != 0)
             {
-                transform.position -= transform.forward * -0.1f * Time.deltaTime;
+                transform.position -= transform.forward * -0.15f * Time.deltaTime;
             }
              
             

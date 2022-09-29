@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using ElephantSDK;
+
 
 public class CanvasCont : MonoBehaviour
 {
@@ -52,11 +52,12 @@ public class CanvasCont : MonoBehaviour
         {
             if (winLevel)
             {
-                Elephant.LevelCompleted(PlayerPrefs.GetInt("level") + 1);
+                
                 winLevel = false;
             }
             GameManager.Instance.gameEnd = true;
             winPanel.SetActive(true);
+            InterstitialsManager.Instance.ShowInterstitial();
         }
         
     }
@@ -67,12 +68,13 @@ public class CanvasCont : MonoBehaviour
         {
             if (lostLevel)
             {
-                Elephant.LevelFailed(PlayerPrefs.GetInt("level") + 1);
+                
                 lostLevel = false;
             }
             GameManager.Instance.gameEnd = true;
             if (DrawObj.Instance.arrowCount == 0) { outAmmoText.SetActive(true); }
             failPanel.SetActive(true);
+            InterstitialsManager.Instance.ShowInterstitial();
         }
         
     }

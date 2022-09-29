@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
-using ElephantSDK;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
@@ -69,11 +69,13 @@ public class GameManager : MonoBehaviour
         firstStart = true;
         gameEnd = false;
 
-        arrowDamage = 15;//PlayerPrefs.GetFloat("arrowDmg", 1f);
-        income = PlayerPrefs.GetInt("income", 5);
-        arrowCount = 100; //PlayerPrefs.GetInt("arrowCount", 25);
+        
 
-        dmgLvl = PlayerPrefs.GetInt("dmgLvl", 1);
+        arrowDamage = (PlayerPrefs.GetInt("level")+1);
+        income = PlayerPrefs.GetInt("income", 5);
+        arrowCount = PlayerPrefs.GetInt("arrowCount", 25);
+
+        dmgLvl = PlayerPrefs.GetInt("level") + 1;
         incLvl = PlayerPrefs.GetInt("incLvl", 1);
         cntLvl = PlayerPrefs.GetInt("cntLvl", 1);
 
@@ -84,21 +86,24 @@ public class GameManager : MonoBehaviour
         playerHP = 10;
          
         money = PlayerPrefs.GetInt("money", 0);
+
+      
     }
 
     // Update is called once per frame
     void Update()
     {
         Debug.Log("ArrowDamage: " + arrowDamage);
+        Debug.Log("ArrowLvl" + dmgLvl);
 
         if (Input.GetMouseButton(0))
         {
             if (firstStart && EventSystem.current.currentSelectedGameObject == null)
             {
-                Elephant.LevelStarted(PlayerPrefs.GetInt("level") + 1);
+                
                 firstStart = false;
             }
-            Debug.Log("girdi");
+           
 
 
         }
@@ -106,15 +111,16 @@ public class GameManager : MonoBehaviour
 
     public void SetArrowDamage()
     {
-        money -= dmgCost;
-        arrowDamage += 0.5f;
-        dmgLvl += 1;
-        dmgCost += 10*dmgLvl;
+        Debug.Log("Arrow Damage Setted");
 
-        PlayerPrefs.SetInt("money", money);
-        PlayerPrefs.SetFloat("arrowDmg", arrowDamage);
-        PlayerPrefs.SetInt("dmgLvl", dmgLvl);
-        PlayerPrefs.SetInt("dmgCost", dmgCost);
+        if (PlayerPrefs.GetInt("level") + 1 > PlayerPrefs.GetInt("dmgLvl", 1))
+        {
+            PlayerPrefs.SetFloat("arrowDmg", arrowDamage + 0.5f);
+            PlayerPrefs.SetInt("dmgLvl", dmgLvl + 1);
+        }
+        
+       
+        
     }
 
     public void SetIncome()
